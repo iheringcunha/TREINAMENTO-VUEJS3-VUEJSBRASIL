@@ -7,16 +7,20 @@
 
   <div>
     <h1>Minha lista</h1>
-    <input type="text" v-model="currentFood" />
-    <button @keyup.enter="addFood">Add</button>
-    <ul>
-      <li v-for="food in foods" :key="food">{{ food }}</li>
-    </ul>
+    <input @keyup.enter="addFood" type="text" v-model="currentFood" />
+    <button @click="addFood">Add</button>
+    <!-- <food-list @my-event="handleClick" :foods="foods"/> -->
+    <food-list @stop="handleStop" :foods="foods"/>
   </div>
 </template>
 
 <script>
+import FoodList from './components/FoodList.vue'
 export default {
+  components : {
+    FoodList
+  },
+
   data() {
     return {
       // name: 'Ihering',
@@ -30,6 +34,11 @@ export default {
     // handleClick () {
     //   window.alert('clicado')
     // }
+
+    handleStop (payload) {
+      console.log('payload =>', payload)
+      window.alert(payload) 
+    },
 
     addFood() {
       this.foods.push(this.currentFood);
